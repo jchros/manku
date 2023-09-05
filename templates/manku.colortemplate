@@ -1,0 +1,231 @@
+Full name: manku
+Short name: manku
+Author: Jason Chrosrova <jason.chrosrova@icloud.com>
+Neovim: yes
+
+; A colorscheme inspired by https://github.com/danishprakash/vim-yami
+; but slightly more colorful and less buggy
+; so /Applications/MacVim.app/Contents/Resources/vim/runtime/colors/tools/check_colors.vim
+
+Variant: gui 256
+Background: dark
+
+; Color palette
+Color: light #D4D4D5 ~
+Color: white #FFFFFF ~
+Color: dark #18151c ~
+Color: gray0 #666666 ~
+Color: gray1 #323232 ~
+Color: gray2 #23242a ~
+Color: gray3 #2b2b2b ~
+
+Color: lime #98B783 ~
+Color: yellow #FFE5CE ~
+Color: darkyellow #99895E ~
+Color: green #79DCAA ~
+Color: red #F87070 ~
+Color: pink #FF5C8F ~
+Color: orange #FF5F00 ~
+Color: blue #1F6FEB ~
+Color: darkblue #12428D ~
+Color: magenta #E02C6D ~
+Color: lightmagenta #FF5C8F ~
+Color: cyan #52DE97 ~
+Color: darkcyan #0AAEB3 ~
+
+Color: emphasisBlue #009FFD ~
+Color: emphasisRed #FF101F ~
+Color: emphasisOrange #FF6700 ~
+Color: emphasisPurple #DC6ACF ~
+Color: emphasisSilver #736F72 ~
+Color: emphasisGreen #109648 ~
+Color: emphasisAzure #2A9D8F ~
+Color: emphasisPink #EF626C ~
+
+Normal light none
+
+verbatim
+if exists('g:@shortname_emphasis_color_list')
+	unlet g:@shortname_emphasis_color_list
+endif
+const g:@shortname_emphasis_color_list = ['blue', 'red', 'purple', 'orange', 'silver', 'green', 'azure', 'pink']
+func! s:emphasis(c) abort
+	let c = type(a:c) == type('') ? a:c : 'white'
+	if c ==? 'random'
+		if !exists('*rand') || !exists('*srand')
+			echoerr 'The "random" color cannot be used since your Vim is too old.'
+		else
+			if !exists('s:eed')
+				let s:eed = srand()
+			endif
+			let pick = rand(s:eed) % (len(g:@shortname_emphasis_color_list) + 1)
+			let c = get(g:@shortname_emphasis_color_list, pick, 'white')
+		endif
+	endif
+	return c
+endfunction
+endverbatim
+
+#let s:_emphasis = s:emphasis(get(g:, '@shortname_emphasis_color'))
+#if s:_emphasis ==? 'blue'
+	mankuEmphasis emphasisBlue none
+#elseif s:_emphasis ==? 'red'
+	mankuEmphasis emphasisRed none
+#elseif s:_emphasis ==? 'purple'
+	mankuEmphasis emphasisPurple none
+#elseif s:_emphasis ==? 'orange'
+	mankuEmphasis emphasisOrange none
+#elseif s:_emphasis ==? 'silver'
+	mankuEmphasis emphasisSilver none
+#elseif s:_emphasis ==? 'green'
+	mankuEmphasis emphasisGreen none
+#elseif s:_emphasis ==? 'azure'
+	mankuEmphasis emphasisAzure none
+#elseif s:_emphasis ==? 'pink'
+	mankuEmphasis emphasisPink none
+#else
+	mankuEmphasis white none
+#endif
+
+Term colors: dark  pink green darkyellow darkblue magenta      darkcyan  light
+Term colors: gray3 red  lime  yellow     blue     lightmagenta cyan white
+
+QuickScopePrimary orange none
+QuickScopeSecondary magenta none
+
+mankuStrong white none bold
+
+; Vim's default groups {{{1
+Boolean -> mankuEmphasis
+CursorColumn omit gray2
+CursorLine omit gray2
+ColorColumn none gray1
+Comment yellow none
+Conceal dark none
+Constant -> Normal
+Cursor dark light
+CursorLineNr light gray3
+DiffAdd none darkblue
+DiffChange none none
+DiffDelete none red
+DiffText none darkyellow
+Directory light none
+EndOfBuffer light none
+Error dark red
+ErrorMsg -> Error
+FoldColumn light gray3
+Folded -> FoldColumn
+Identifier light none
+IncSearch yellow gray0
+LineNr gray0 none
+MatchParen dark gray0
+ModeMsg light none
+NonText gray0 none
+Operator -> Normal
+Pmenu light gray1
+PmenuSbar dark gray3
+PmenuSel -> Cursor
+PmenuThumb -> Cursor
+PreProc light none
+Include -> mankuEmphasis
+Define -> mankuEmphasis
+PreCondit -> mankuEmphasis
+Question light none
+; QuickFixLine
+Search yellow gray0
+SignColumn gray3 none
+Special light none
+SpecialKey light none
+String lime none
+SpellBad red none undercurl
+SpellCap blue none undercurl
+SpellLocal red none undercurl
+SpellRare yellow none undercurl
+Statement -> mankuEmphasis
+Keyword -> mankuEmphasis
+StatusLine light gray2
+StatusLineNC light gray0
+TabLine light gray2
+;TabLineFill
+;TabLineSel
+Title gray0 none
+Todo blue none
+;ToolbarButton
+;ToolbarLine
+Type -> Normal
+Underlined none none g=underline
+VertSplit gray1 none
+WinSeparator none none
+Visual none gray1
+VisualNOS gray3 light
+WarningMsg yellow none
+WildMenu light none
+
+; tree-sitter {{{1
+TSAttribute light none
+TSCharacter lime none
+TSCharacterSpecial red none
+TSConstant -> Normal
+TSConstBuiltin -> mankuEmphasis
+TSConstMacro -> mankuEmphasis
+TSDebug light none
+TSDefine light none
+TSException-> mankuEmphasis
+TSKeywordOperator -> Keyword
+TSStorageClass -> Keyword
+TSString -> String
+TSStringRegex red none
+TSStringEscape yellow none
+TSStringSpecial light none
+TSSymbol -> mankuEmphasis
+TSTagAttribute light none
+TSText light none
+TSStrong none none bold
+TSEmphasis -> TSStrong
+TSURI blue none g=underline
+TSEnvironmentName green none
+TSVariable light none
+TSVariableBuiltin -> Normal
+TSAssignment cyan none bold
+TSKeyword -> Keyword
+TSKeywordReturn -> Keyword
+; TSError -> Error
+; }}}1
+
+helpHyperTextJump darkcyan none
+helpHeader pink none
+
+gitCommitFirstLine none none bold
+gitCommitSummary -> mankuEmphasis
+gitCommitOverflow red none undercurl
+
+fugitiveUntrackedHeading -> mankuStrong
+fugitiveUntrackedModifier -> mankuStrong
+fugitiveUnstagedHeading -> mankuStrong
+fugitiveUnstagedModifier -> mankuStrong
+fugitiveStagedHeading -> mankuStrong
+fugitiveStagedModifier -> mankuStrong
+fugitiveHeader -> mankuStrong
+fugitiveCount lime none
+diffLine -> mankuEmphasis
+diffRemoved red none
+diffAdded blue none
+plugDeleted -> diffRemoved
+
+sqlKeyword -> Keyword
+sqlFunction -> Keyword
+sqlSpecial -> Keyword
+
+xmlTagName -> Keyword
+
+lispDecl -> Normal
+lispFunc -> Normal
+lispVar -> Normal
+lispKey -> Keyword
+
+swiftFuncDefinition -> Keyword
+
+anyDiceTSFunction pink none
+anyDiceTSParameter darkcyan none
+
+Italic omit omit italic
